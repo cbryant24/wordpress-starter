@@ -46,6 +46,8 @@ namespace :setup do
     db_config = ERB.new(File.read('config/templates/wp-config-development.php.erb')).result(binding)
     File.open("wp-config.php", 'w') {|f| f.write(db_config) }
 
+    system("ln wp-config.php public/wp-config.php")
+
     print_success('The WordPress config file has been created on your local machine :)')
 
     print_info (wp_debug) ? 'DEBUG MODE IS ENABLED; Squash those bugs!' : 'Debug mode is disabled; remember, hiding the bugs doesn\'t make them go away.....'

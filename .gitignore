@@ -4,4 +4,4 @@ wp-security-keys.php
 phpdebug.php
 phpinfo.php
 
-/wp-config.php
+wp-config.php

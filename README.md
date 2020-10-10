@@ -62,7 +62,7 @@ Run the following commands
 
 - **Initialize Database for Local Server**
 Run the following commands  
-
+      rake setup
       cd public
       wp core install --url=http://localhost:9999/ --title=wordpress-starter --admin_user=admin --admin_password=password --admin_email=admin@admin.com
 
