@@ -1,0 +1,130 @@
+<?php
+
+######### IMPORTANT #########
+#
+# This version of the file is used only in development/testing. 
+#
+# Make sure to change '/config/templates/wp-config.php.erb' for staging/production
+#
+#############################
+
+
+#############################
+# Environment
+#############################
+if ( !defined('WP_ENV') ) define('WP_ENV', 'development');
+
+if (WP_ENV == 'phpunit' || WP_ENV == 'test') {
+	define('WP_DEBUG', false); // Debug mode must always be disabled for testing
+} else {
+	define('WP_DEBUG', <%= (wp_debug) ? 'true' : 'false' %>);
+}
+
+
+#############################
+# Database Configuration
+#############################
+$table_prefix  = 'wp_';
+
+if (WP_ENV == 'phpunit' || WP_ENV == 'test') {
+
+	define('DB_NAME', '<%= database_test['database'] %>');
+	define('DB_USER', '<%= database_test['username'] %>');
+	define('DB_PASSWORD', '<%= database_test['password'] %>');
+	define('DB_HOST', '<%= database_test['host'] %>');
+	define('DB_CHARSET', 'utf8');
+	define('DB_COLLATE', '');
+
+} else {
+
+	define('DB_NAME', '<%= database['database'] %>');
+	define('DB_USER', '<%= database['username'] %>');
+	define('DB_PASSWORD', '<%= database['password'] %>');
+	define('DB_HOST', '<%= database['host'] %>');
+	define('DB_CHARSET', 'utf8');
+	define('DB_COLLATE', '');
+
+}
+
+#############################
+# Automated Testing
+#############################
+if (WP_ENV == 'phpunit') {
+	define( 'WP_TESTS_DOMAIN', '<%= wp_domain_test %>' );
+	define( 'WP_TESTS_EMAIL', '' );
+	define( 'WP_TESTS_TITLE', '' );
+	define( 'WP_PHP_BINARY', 'php' );
+}
+
+#############################
+# Localization Settings
+#############################
+define('WPLANG', '');
+
+
+#############################
+# Security
+#############################
+define('DISALLOW_FILE_EDIT', true); // File edits must only occur via SCM (git)
+define('DISALLOW_FILE_MODS', true); // File edits must only occur via SCM (git)
+
+
+#############################
+# Security Keys (Salt)
+#############################
+require('<%= project_path %>/wp-security-keys.php');
+
+
+#############################
+# PATHS AND URLS
+#############################
+if (WP_ENV == 'phpunit' || WP_ENV == 'test') {
+	define('DOMAIN_CURRENT_SITE', '<%= wp_domain_test %>');
+} else {
+	define('DOMAIN_CURRENT_SITE', '<%= wp_domain %>');
+}
+
+define('WP_HOME','http://'.DOMAIN_CURRENT_SITE);
+define('WP_SITEURL','http://'.DOMAIN_CURRENT_SITE);
+
+// wp-content paths
+define('WP_CONTENT_URL', 'http://'.DOMAIN_CURRENT_SITE.'/wp-content');
+define('WP_CONTENT_DIR', realpath('<%= project_path %>/content'));
+
+// Nginx cache path for nginx-helper
+define('RT_WP_NGINX_HELPER_CACHE_PATH', '/var/cache/nginx/wordpress/');
+
+// Absolute path to the WP directory
+if ( !defined('ABSPATH') ) define('ABSPATH', '<%= project_path %>/public/');
+
+
+#############################
+# Authentication Keys
+#############################
+class wp_starter_keychain {
+	private $hash = 'd554c68aa02990597ffc2d68f445a6fa';
+	private $keys = array(
+		'email_username' => '<%= secrets['email']['username'] if secrets['email'] %>',
+		'email_password' => '<%= secrets['email']['password'] if secrets['email']  %>',
+
+		'roleservice_api_url'  => '<%= secrets['roleservice']['api_url'] if secrets['roleservice'] %>',
+		'roleservice_username' => '<%= secrets['roleservice']['username'] if secrets['roleservice'] %>',
+		'roleservice_password' => '<%= secrets['roleservice']['password'] if secrets['roleservice'] %>',
+	);
+
+	public function __construct($passphrase) {
+		if (md5($passphrase) != $this->hash) unset($this->keys);
+	}
+
+	public function get($name) {
+		return ($this->keys && array_key_exists($name, $this->keys)) ? $this->keys[$name] : md5(time());
+	}
+}
+
+#############################
+# Includes
+#############################
+if (WP_ENV != 'phpunit') {
+	require_once(ABSPATH . 'wp-settings.php');
+}
+

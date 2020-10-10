@@ -1,0 +1,7 @@
+database.yml
+secrets.yml
+wp-security-keys.php
+phpdebug.php
+phpinfo.php
+
+/wp-config.php

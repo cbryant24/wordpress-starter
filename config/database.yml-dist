@@ -1,0 +1,23 @@
+---
+# This should be filled out and placed in /newsroom/config/database.yml
+# This file is *only* used to generate wp-config.php
+production:
+  hotst: 'TBA'
+  database: 'database_name'
+  username: 'user_name'
+  password: 'productionPasswrod'
+staging:
+  host: 'TBA' 
+  database: 'database_name' 
+  username: 'user_name'
+  password: 'stagingPassword'
+local:
+  host: 'localhost' 
+  database: 'database_name' 
+  username: 'user_name'
+  password: 'localPassword'
+test:
+  host: 'localhost'
+  database: 'database_name'
+  username: 'user_name'
+  password: 'publicpassword'
