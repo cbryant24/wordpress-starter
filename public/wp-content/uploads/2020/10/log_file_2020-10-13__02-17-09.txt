@@ -1,0 +1,24 @@
+
+---Downloaded files---
+The import files for: Default were successfully downloaded!
+Initial max execution time = 30
+Files info:
+Site URL = http://localhost:9999
+Data file = /Users/cbryant/Desktop/webdev/portfolio/public/wp-content/themes/myour/demo/01/content.xml
+Widget file = not defined!
+Customizer file = not defined!
+Redux files:
+not defined!
+
+------
+New AJAX call!
+[WARNING] Failed to import portfolio_categories Content
+[WARNING] Failed to import portfolio_categories Gallery
+[WARNING] Failed to import portfolio_categories Image
+[WARNING] Failed to import portfolio_categories Links
+[WARNING] Failed to import portfolio_categories Music
+[WARNING] Failed to import portfolio_categories Video
+
+
+---pt-ocdi/after_import---
+

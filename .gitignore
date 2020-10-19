@@ -3,5 +3,5 @@ secrets.yml
 wp-security-keys.php
 phpdebug.php
 phpinfo.php
-
+wpdebug.php
 wp-config.php
